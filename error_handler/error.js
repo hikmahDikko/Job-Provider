@@ -5,7 +5,6 @@ exports.authErrors = (err) => {
     //duplicate error code
     if(err.code === 11000) {
         errors.email = "email already registered";
-        errors.companyName = "company already registered";
 
         return errors;
     }

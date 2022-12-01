@@ -2,14 +2,21 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator")
 
 const employerSchema = new mongoose.Schema({
-    fullName : {
+    firstName : {
         type : String,
         required : [true, "Please enter your first name"],
+    },
+    lastName : {
+        type : String,
+        required : [true, "Please enter your last name"]
+    },
+    middleName : {
+        type : String,
+        required : [true, "Please enter your middle name"]
     },
     companyName : {
         type : String,
         required : [true, "Please enter the company's name"],
-        unique : true
     },
     email: {
         type: String,

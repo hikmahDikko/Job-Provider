@@ -7,29 +7,27 @@ exports.createJob = async (req, res) => {
     try {
         const employerId = req.user.id;
         
-        let {title, category, location, keyword, description, address, jobType, workType} = req.body;
+        const {title, category, location, keyword, description, address, jobType, workType} = req.body;
         const employer = await Employer.findOne({employerId});
 
-        if(employer) {
-            const job = await Job.create({ 
-                companyName : employer.companyName,
-                title, 
-                category, 
-                location, 
-                keyword, 
-                description, 
-                address, 
-                jobType, 
-                workType
-            });
-            
-            return res.status(201).json({
-                status : "success",
-                data : {
-                    job
-                }
-            });
-        }
+        const job = await Job.create({ 
+            employerId,
+            title, 
+            category, 
+            location, 
+            keyword, 
+            description, 
+            address, 
+            jobType, 
+            workType
+        });
+        
+        return res.status(201).json({
+            status : "success",
+            data : {
+                job
+            }
+        });
     }catch (error) {
         console.log(error);
         const errors = jobErrors(error)
@@ -39,11 +37,12 @@ exports.createJob = async (req, res) => {
 
 exports.getJobs = async (req, res) => {
     try {
-        let userId = req.user.id;
-
-        const user = await User.findOne({userId});
-
-        const jobRecommendations = await Job.find({category : user.skill});
+       
+        const userId = req.user.id;
+        
+        const user = await User.findById({_id : userId});
+        
+        const jobRecommendations = await Job.findOne({category : user.skill});
 
         if(jobRecommendations) {
             return res.status(201).json({
@@ -54,6 +53,10 @@ exports.getJobs = async (req, res) => {
                 }
             })
         }
+        res.status(201).json({
+            status : "success",
+            message : "Chech back later"
+        })
     } catch (error) {
         console.log(error);
     }
