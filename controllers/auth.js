@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const { authErrors } = require("../error_handler/error");
 const { generateToken } = require("../middleware/authMiddleware");
-require("dotenv").config();
+require("dotenv").config({path : "./config.env"});
 const { MAX_AGE } = process.env;
 const Token = require("../models/token");
 const bcrypt = require("bcrypt");

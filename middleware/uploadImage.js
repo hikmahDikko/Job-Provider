@@ -1,5 +1,5 @@
 const cloudinary = require("cloudinary").v2;
-require("dotenv").config();
+require("dotenv").config({path : "./config.env"});
 const multer = require("multer");
 
 cloudinary.config({ 
