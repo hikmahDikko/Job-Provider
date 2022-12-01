@@ -6,7 +6,6 @@ const { MAX_AGE } = process.env;
 const Token = require("../models/token");
 const bcrypt = require("bcrypt");
 
-
 exports.createOne = (model) => {
     return async (req, res) => {
         try {

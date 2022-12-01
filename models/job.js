@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 
 const jobSchema = new mongoose.Schema({
-    employerId : {
-        type: mongoose.Schema.ObjectId,
-        ref : "Employer"
-    },
     companyName : {
-        type : String,
+        type : String
     },
     title : {
         type : String,
@@ -51,6 +47,17 @@ const jobSchema = new mongoose.Schema({
         default : Date.now(),
     }
 });
+
+jobSchema.pre("/^find/", function (next) {
+    this.populate([
+        {
+        path: "employerId",
+        select: "companyName",
+        }
+    ]);
+    next();
+});
+
 
 const Job = mongoose.model("Job", jobSchema);
 

@@ -1,10 +1,11 @@
 //handle errors
 exports.authErrors = (err) => {
-    let errors = { firstName : "", lastName : "", middleName : "", email : "", password : "", confirmPassword : ""};
+    let errors = { firstName : "", lastName : "", middleName : "", companyName : "", email : "", password : "", confirmPassword : ""};
 
     //duplicate error code
     if(err.code === 11000) {
         errors.email = "email already registered";
+        errors.companyName = "company already registered";
 
         return errors;
     }
@@ -26,7 +27,7 @@ exports.authErrors = (err) => {
 }
 
 exports.jobErrors = (err) => {
-    let errors = { employerId : "", companyName : "", title : "", category : "", location : "", keyword : "", description : "", address : "", jobType : "", workType : ""};
+    let errors = { employerId : "", title : "", category : "", location : "", keyword : "", description : "", address : "", jobType : "", workType : ""};
 
     //validate errors
     if(err.message.includes('Job validation failed' )) {

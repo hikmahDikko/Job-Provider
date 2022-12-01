@@ -1,7 +1,6 @@
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const employerRoutes = require("./routes/employer");
-const jobRecommendationRoutes = require("./routes/job-recommedation");
 const jobRoutes = require("./routes/job");
 const express = require ("express");
 const cookieParser = require( "cookie-parser");
@@ -25,6 +24,5 @@ app.use("/api/v1/auths", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/employers", employerRoutes);
 app.use("/api/v1/jobs", jobRoutes);
-app.use("/api/v1/job-recommendation", jobRecommendationRoutes);
 
 module.exports = app;

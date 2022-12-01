@@ -26,10 +26,11 @@ exports.updateEmployer = async (req, res) => {
         const firstName = req.body.firstName === undefined ? user.firstName : req.body.firstName;
         const lastName = req.body.lastName === undefined ? user.lastName : req.body.lastName;
         const middleName = req.body.middleName === undefined ? user.middleName : req.body.middleName;
+        const companyName = req.body.companyName === undefined ? user.companyName : req.body.companyName;
         const email = req.body.email === undefined ? user.email : req.body.email;
         const phoneNumber = req.body.phoneNumber === undefined ? user.phoneNumber : req.body.phoneNumber;
         const profileImage = req.body.profileImage === undefined ? user.profileImage : req.body.profileImage;
-        const update = { firstName, lastName, middleName, email, phoneNumber, profileImage };
+        const update = { firstName, lastName, middleName, companyName, email, phoneNumber, profileImage };
         const updatedUser = await Employer.findByIdAndUpdate(req.params.id, update);
         res.status(200).json({
           status: "success",
