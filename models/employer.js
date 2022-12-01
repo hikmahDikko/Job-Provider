@@ -2,9 +2,17 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator")
 
 const employerSchema = new mongoose.Schema({
-    fullName: {
-        type: String,
-        required: [true, "Please enter your fullName"],
+    firstName : {
+        type : String,
+        required : [true, "Please enter your first name"],
+    },
+    lastName : {
+        type : String,
+        required : [true, "Please enter your last name"]
+    },
+    middleName : {
+        type : String,
+        required : [true, "Please enter your middle name"]
     },
     email: {
         type: String,
@@ -14,6 +22,9 @@ const employerSchema = new mongoose.Schema({
         validate : [isEmail, "Please enter a valid email"]
     },
     phoneNumber : {
+        type : String,
+    },
+    profileImage :{
         type : String,
     },
     password : {
@@ -30,6 +41,11 @@ const employerSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
+    },
+    role : {
+        type : String,
+        default : "employer",
+        enum : ["employee", "employer", "admin"]
     },
 });
 

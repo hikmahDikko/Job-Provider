@@ -1,38 +1,36 @@
-const User = require("../models/user");
+const Employer = require("../models/employer");
 const { authErrors } = require("../error_handler/error");
 const { getAll, getOne, deleteOne } = require("../controllers/generic");
 const { createOne, signIn } = require("../controllers/auth");
 
-exports.signUpUser = createOne(User);
+exports.signUpEmployer = createOne(Employer);
 
-exports.signInUser = signIn(User);
+exports.signInEmployer = signIn(Employer);
 
-exports.getUsers = getAll(User);
+exports.getEmployers = getAll(Employer);
 
-exports.getUser = getOne(User);
+exports.getEmployer = getOne(Employer);
 
-exports.deleteUser = deleteOne(User);
+exports.deleteEmployer = deleteOne(Employer);
 
-exports.updateUser = async (req, res) => {
+exports.updateEmployer = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await Employer.findById(req.params.id);
         if (!user) {
           return res.status(400).json({
             status: "fail",
             message: `There is no user with the ID ${req.params.id}`,
           });
         }
+        
         const firstName = req.body.firstName === undefined ? user.firstName : req.body.firstName;
         const lastName = req.body.lastName === undefined ? user.lastName : req.body.lastName;
         const middleName = req.body.middleName === undefined ? user.middleName : req.body.middleName;
         const email = req.body.email === undefined ? user.email : req.body.email;
         const phoneNumber = req.body.phoneNumber === undefined ? user.phoneNumber : req.body.phoneNumber;
-        const address = req.body.address === undefined ? user.address : req.body.address;
-        const experience = req.body.experience === undefined ? user.experience : req.body.experience;
-        const skill = req.body.skill === undefined ? user.skill : req.body.skill;
         const profileImage = req.body.profileImage === undefined ? user.profileImage : req.body.profileImage;
-        const update = { firstName, lastName, middleName, email, password, address, phoneNumber, experience, skill, profileImage };
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, update);
+        const update = { firstName, lastName, middleName, email, phoneNumber, profileImage };
+        const updatedUser = await Employer.findByIdAndUpdate(req.params.id, update);
         res.status(200).json({
           status: "success",
           data: {

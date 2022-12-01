@@ -10,27 +10,29 @@ exports.generateToken = (id) => jwt.sign(
 );
 
 //Authorization middleware
-exports.auth = async (req, res, next) => {
-    let token;
+exports.auth = (model) => {
+    return async (req, res, next) => {
+        let token;
 
-    if ( req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        token = req.headers.authorization.split(" ")[1];
-    }
+        if ( req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            token = req.headers.authorization.split(" ")[1];
+        }
 
-    if (!token){
-        res.status(403).json({
-            status : "fail",
-            message : "User not login"
-        });
-    }
-    const verifyJWT = await jwt.verify(token, JWT_SECRET, {expiresIn : JWT_EXPIRY});
+        if (!token){
+            res.status(403).json({
+                status : "fail",
+                message : "User not login"
+            });
+        }
+        const verifyJWT = await jwt.verify(token, JWT_SECRET, {expiresIn : JWT_EXPIRY});
 
-    const currentUser = await User.findById(verifyJWT.id);
+        const currentUser = await model.findById(verifyJWT.id);
 
-    req.user = currentUser;
+        req.user = currentUser;
 
-    next();
-};
+        next();
+    };
+}
 
 //Check user's role
 exports.checkRole = (...roles) => {
