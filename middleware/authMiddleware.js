@@ -19,7 +19,7 @@ exports.auth = (model) => {
         }
 
         if (!token){
-            res.status(403).json({
+            return res.status(403).json({
                 status : "fail",
                 message : "User not login"
             });

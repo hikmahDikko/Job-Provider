@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const jobProcessingSchema = new mongoose.Schema({
+const jobRecommendationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -19,4 +19,4 @@ const jobProcessingSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("JobProcess", jobProcessingSchema)
+module.exports = mongoose.model("JobRecommendation", jobRecommendationSchema)

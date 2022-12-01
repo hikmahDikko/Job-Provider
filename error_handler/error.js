@@ -24,3 +24,16 @@ exports.authErrors = (err) => {
 
     return errors;
 }
+
+exports.jobErrors = (err) => {
+    let errors = { employerId : "", companyName : "", title : "", category : "", location : "", keyword : "", description : "", address : "", jobType : "", workType : ""};
+
+    //validate errors
+    if(err.message.includes('Job validation failed' )) {
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message
+        })
+    };
+
+    return errors;
+}

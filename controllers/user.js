@@ -31,7 +31,7 @@ exports.updateUser = async (req, res) => {
         const experience = req.body.experience === undefined ? user.experience : req.body.experience;
         const skill = req.body.skill === undefined ? user.skill : req.body.skill;
         const profileImage = req.body.profileImage === undefined ? user.profileImage : req.body.profileImage;
-        const update = { firstName, lastName, middleName, email, password, address, phoneNumber, experience, skill, profileImage };
+        const update = { firstName, lastName, middleName, email, address, phoneNumber, experience, skill, profileImage };
         const updatedUser = await User.findByIdAndUpdate(req.params.id, update);
         res.status(200).json({
           status: "success",

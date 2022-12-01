@@ -14,6 +14,11 @@ const employerSchema = new mongoose.Schema({
         type : String,
         required : [true, "Please enter your middle name"]
     },
+    companyName : {
+        type : String,
+        required : [true, "Please enter the company's name"],
+        unique : true
+    },
     email: {
         type: String,
         required: [true, "Please enter an email address"],
