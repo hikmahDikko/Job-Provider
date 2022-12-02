@@ -7,7 +7,7 @@ const Admin = require("../models/user");
 
 const router = express.Router();
 
-const { signUpEmployer, signInEmployer,  getEmployer, deleteEmployer, updateEmployer } = employerController;
+const { signUpEmployer, signInEmployer,  getUser, getEmployer, deleteEmployer, updateEmployer } = employerController;
 
 router.post("/signup", signUpEmployer);
 
@@ -16,6 +16,7 @@ router.post("/signin", signInEmployer);
 router
     .route("/:id")
     .get(auth(Employer), getEmployer)
+    .get(auth(Employer), getUser)
     .patch(auth(Employer), uploadProfileImage, resizeImage, updateEmployer)
     .delete(auth(Admin), deleteEmployer);
 

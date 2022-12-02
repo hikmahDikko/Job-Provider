@@ -1,13 +1,14 @@
 const Employer = require("../models/employer");
+const User = require("../models/user");
 const { authErrors } = require("../error_handler/error");
-const { getAll, getOne, deleteOne } = require("../controllers/generic");
+const { getOne, deleteOne } = require("../controllers/generic");
 const { createOne, signIn } = require("../controllers/auth");
 
 exports.signUpEmployer = createOne(Employer);
 
 exports.signInEmployer = signIn(Employer);
 
-exports.getEmployers = getAll(Employer);
+exports.getUser = getOne(User);
 
 exports.getEmployer = getOne(Employer);
 
