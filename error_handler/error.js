@@ -1,6 +1,6 @@
 //handle errors
 exports.authErrors = (err) => {
-    let errors = { firstName : "", lastName : "", middleName : "", companyName : "", email : "", password : "", confirmPassword : ""};
+    let errors = { firstName : "", lastName : "", middleName : "", email : "", password : "", confirmPassword : ""};
 
     //duplicate error code
     if(err.code === 11000) {

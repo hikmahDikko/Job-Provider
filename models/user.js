@@ -35,14 +35,16 @@ const userSchema = new mongoose.Schema({
     phoneNumber : {
         type : String,
     },
+    linkedInURL : {
+
+    },
+    githubURL : {
+
+    },
     cv : {
         type : String,
         //required : [true, "Please upload your CV"]
     },
-    // jobRecommendation : [{
-    //     type : mongoose.Schema.ObjectId,
-    //     ref : "JobRecommendation",
-    // }],
     skill : {
         type : String,
         enum : ["frontend developer", "backend developer", "UI/UX designer", "product designer", "full stack developer"], 

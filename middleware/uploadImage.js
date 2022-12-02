@@ -1,6 +1,7 @@
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config({path : "./config.env"});
 const multer = require("multer");
+const User = require("../models/user");
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_USER_NAME, 
