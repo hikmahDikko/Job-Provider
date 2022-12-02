@@ -13,15 +13,18 @@ const { makeApplication,
     updateJobStatus 
 } = jobApplicationController;
 
+router.get('/notification', auth(Employer), getAllApplications);
+
 router.route("/")
     .post(auth(User), makeApplication)
     .get(auth(User), getMyJobApplications);;
 
 router.route("/:id")
-    .get(auth(User), getOneApplication)
-    .delete(auth(User), deleteOneApplication)
+    .get(auth(Employer), getOneApplication)
     .patch(auth(Employer), updateJobStatus);
 
-router.get("/all", auth(Employer), getAllApplications);
+router.route("/:id")
+    .get(auth(User), getOneApplication)
+    .delete(auth(User), deleteOneApplication);
 
 module.exports = router;

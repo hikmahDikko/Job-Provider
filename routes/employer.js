@@ -14,6 +14,10 @@ router.post("/signup", signUpEmployer);
 router.post("/signin", signInEmployer);
 
 router
+    .route("/users/:id")
+    .get(auth(Employer), getUser);
+
+router
     .route("/:id")
     .get(auth(Employer), getEmployer)
     .get(auth(Employer), getUser)

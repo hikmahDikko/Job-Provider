@@ -16,14 +16,14 @@ const jobApplicaionSchema = new mongoose.Schema({
     }
 });
 
-jobApplicaionSchema.pre(/^find/, function (next) {
-    this.populate([
-        {
-        path: "jobId",
-        select: "",
-        }
-    ]);
-    next();
-});
+// jobApplicaionSchema.pre(/^find/, function (next) {
+//     this.populate([
+//         {
+//         path: "jobId",
+//         select: "",
+//         }
+//     ]);
+//     next();
+// });
 
 module.exports = mongoose.model("JobApplication", jobApplicaionSchema);

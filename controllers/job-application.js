@@ -1,4 +1,5 @@
 const JobApplication = require("../models/job-application");
+const QueryMethod = require("../utils/query");
 const Job = require("../models/job");
 const { getOne, getAll } = require("../controllers/generic");
 const User = require("../models/user");
@@ -58,12 +59,40 @@ exports.updateJobStatus = async (req, res) => {
         await JobApplication.findByIdAndUpdate(req.params.id, {
             status : req.body.status, 
         }); 
+        res.status(201).json({
+            status: "success",
+            message : "Data successfully updated"
+        })
     } catch (error) {
         console.log(error);
     }
 };
 
-exports.getAllApplications = getAll(JobApplication);
+exports.getAllApplications = async (req, res) => {
+    try {
+        const employerId = req.user.id;
+        const job = await Job.find({employerId});
+
+        if(job) {
+            let queriedUsers = new QueryMethod(JobApplication.find({}), req.query)
+            .sort()
+            .filter()
+            .limit()
+            .paginate();
+        let datas = await queriedUsers.query;
+        res.status(200).json({
+            status: "success",
+            results: datas.length,
+            datas
+        });    
+        }
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            message: error,
+        });
+    }
+};
 
 exports.getOneApplication = getOne(JobApplication);
 
