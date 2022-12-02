@@ -12,18 +12,18 @@ const jobApplicaionSchema = new mongoose.Schema({
     status : {
         type : String,
         default : "denied",
-        //applied, denied
+        enum : ["applied", "shortListed", "accepted", "rejected"]
     }
 });
 
-// jobApplicaionSchema.pre(/^find/, function (next) {
-//     this.populate([
-//         {
-//         path: "employeeId",
-//         select: "",
-//         }
-//     ]);
-//     next();
-// });
+jobApplicaionSchema.pre(/^find/, function (next) {
+    this.populate([
+        {
+        path: "jobId",
+        select: "",
+        }
+    ]);
+    next();
+});
 
 module.exports = mongoose.model("JobApplication", jobApplicaionSchema);

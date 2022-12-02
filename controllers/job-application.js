@@ -1,7 +1,7 @@
 const JobApplication = require("../models/job-application");
 const Job = require("../models/job");
-const ApplicationNotification = require("../models/application-notification");
 const { getOne, getAll } = require("../controllers/generic");
+const User = require("../models/user");
 
 exports.makeApplication = async (req, res) => {
     try {
@@ -27,11 +27,6 @@ exports.makeApplication = async (req, res) => {
                 status
             });
 
-            await ApplicationNotification.create({
-                userId,
-                applicationId : jobApplication._id
-            });
-
             return res.status(201).json({
                 status : "success",
                 message : "You have successfully applied for the job",
@@ -49,15 +44,50 @@ exports.makeApplication = async (req, res) => {
     }
 };
 
+exports.updateJobStatus = async (req, res) => {
+    try {
+        const jobApplication = await JobApplication.findById(req.params.id);
+
+        if (!jobApplication) {
+            return res.status(404).json({
+                status: "fail",
+                message : `There is no application with the ID ${jobApplication}`
+            })
+        } 
+
+        await JobApplication.findByIdAndUpdate(req.params.id, {
+            status : req.body.status, 
+        }); 
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 exports.getAllApplications = getAll(JobApplication);
 
 exports.getOneApplication = getOne(JobApplication);
 
+exports.getMyJobApplications = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const application = await JobApplication.find({userId});
+
+        res.status(201).json({
+            status : "success",
+            message : "Your job applications are as follows",
+            results : application.length,
+            data : {
+                application
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 exports.deleteOneApplication = async (req, res) => {
     try {
         const del = await JobApplication.findByIdAndDelete({_id : req.params.id});
-
-        await ApplicationNotification.findByIdAndDelete({_id : req.params.id});
 
         if(del) {
             return res.status(204).send();

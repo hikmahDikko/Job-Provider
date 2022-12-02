@@ -1,8 +1,9 @@
 const userController = require("../controllers/user");
 const express = require("express");
-const { auth, checkRole } = require("../middleware/authMiddleware");
+const { auth } = require("../middleware/authMiddleware");
 const { uploadProfileImage, resizeImage } = require("../middleware/uploadImage");
 const User = require("../models/user");
+const Admin = require("../models/user");
 
 const router = express.Router();
 
@@ -16,6 +17,6 @@ router
     .route("/:id")
     .get(auth(User), getUser)
     .patch(auth(User), uploadProfileImage, resizeImage, updateUser)
-    .delete(auth(User), checkRole("admin"), deleteUser);
+    .delete(auth(Admin), deleteUser);
 
 module.exports = router;

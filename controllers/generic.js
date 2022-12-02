@@ -1,4 +1,5 @@
 const QueryMethod = require("../utils/query");
+const { authErrors } = require("../error_handler/error");
 
 exports.getAll = (model) => {
     return async (req, res) => {
@@ -8,11 +9,11 @@ exports.getAll = (model) => {
             .filter()
             .limit()
             .paginate();
-            let users = await queriedUsers.query;
+            let datas = await queriedUsers.query;
             res.status(200).json({
                 status: "success",
-                results: users.length,
-                data: users,
+                results: datas.length,
+                datas
             }); 
         } catch (error) {
             res.status(400).json({
@@ -26,11 +27,9 @@ exports.getAll = (model) => {
 exports.getOne = (model) => {
     return async (req, res) => {
         try {
-        const user = await model.findById(req.params.id);
+        const data = await model.findById(req.params.id);
         res.status(200).json({
-            data: {
-            user,
-            },
+            data
         });
         } catch (error) {
         res.status(400).json({
@@ -51,11 +50,11 @@ exports.deleteOne = (model) => {
             }else{
                 return res.status(404).send({
                     status : false,
-                    message : "Account cannot be fetched"
+                    message : "Data cannot be fetched"
                 })
             }
         }catch (err) {
-            const errors = handleError(err)
+            const errors = authErrors(err)
             res.status(400).json({ errors });
         }
     }

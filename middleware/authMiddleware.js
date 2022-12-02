@@ -33,27 +33,3 @@ exports.auth = (model) => {
         next();
     };
 }
-
-//Check user's role
-exports.checkRole = (...roles) => {
-    return async (req, res, next) => {
-        if(!req.user.role.includes(...roles))
-        return res.status(401).json({
-            status : 'fail',
-            message : "You're not authorized to perform this action."
-        });
-
-        next();
-    };
-};
-
-
-//Check user skills for job recommendation
-exports.checkSkill = async (...skills) => {
-    if(!req.user.skill.includes(...skills)) {
-        return res.status(200).json({
-            message : "No job recommendation for now! Please try again"
-        })
-    }
-    next();
-}
