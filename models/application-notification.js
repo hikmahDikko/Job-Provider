@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 
 const applicaionSchema = new mongoose.Schema({
     userId : {
-        type : mongoose.Schema.objectId,
+        type : mongoose.Schema.ObjectId,
         ref : "User"
     }, 
     applicationId : {
-        type : mongoose.Schema.objectId,
+        type : mongoose.Schema.ObjectId,
         ref : "JobApplication"
     },
     status : {
         type : String,
-        status : [shortListed, accepted, rejected]
+        status : ["shortListed", "accepted", "rejected"]
     }
 });
 
@@ -25,4 +25,4 @@ applicaionSchema.pre(/^find/, function (next) {
     next();
 });
 
-module.exports = model.mongoose("JobApplication", applicaionSchema);
+module.exports = mongoose.model("ApplicationNotification", applicaionSchema);

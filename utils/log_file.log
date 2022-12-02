@@ -293,3 +293,11 @@
 [0mGET /api/v1/jobs/myJob [33m404[0m 6.948 ms - 156[0m
 [0mGET /api/v1/jobs/my-job [32m201[0m 398.509 ms - 83[0m
 [0mGET /api/v1/jobs/my-job [32m201[0m 386.674 ms - 1536[0m
+[0mPOST /api/v1/users/signin [32m200[0m 269.498 ms - 512[0m
+[0mGET /api/v1/jobs [32m201[0m 489.538 ms - 845[0m
+[0mPOST /api/v1/job-applications [33m404[0m 1.651 ms - 163[0m
+[0mPOST /api/v1/job-applications [33m404[0m 4.584 ms - 163[0m
+[0mPOST /api/v1/job-applications [33m404[0m 2.701 ms - 163[0m
+[0mPOST /api/v1/job-applications [33m404[0m 6.793 ms - 163[0m
+[0mPOST /api/v1/job-applications [33m404[0m 5.581 ms - 163[0m
+[0mPOST /api/v1/users/job-applications [32m201[0m 865.371 ms - 233[0m
