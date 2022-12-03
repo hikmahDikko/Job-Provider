@@ -1,10 +1,10 @@
 const JobApplication = require("../models/job-application");
 const QueryMethod = require("../utils/query");
 const Job = require("../models/job");
-const { getOne, getAll } = require("../controllers/generic");
-const User = require("../models/user");
+const Employer = require("../models/employer");
+const { getOne, getAll, deleteOne } = require("../controllers/generic");
 
-exports.makeApplication = async (req, res) => {
+exports.createJobApplication = async (req, res) => {
     try {
         const userId = req.user.id;
     
@@ -24,6 +24,7 @@ exports.makeApplication = async (req, res) => {
         if(!user) {
             const jobApplication = await JobApplication.create({
                 userId,
+                employerId: job.employerId,
                 jobId, 
                 status
             });
@@ -47,22 +48,23 @@ exports.makeApplication = async (req, res) => {
 
 exports.updateJobStatus = async (req, res) => {
     try {
-        const jobApplication = await JobApplication.findById(req.params.id);
+        const employerId = req.user.id;
 
-        if (!jobApplication) {
-            return res.status(404).json({
-                status: "fail",
-                message : `There is no application with the ID ${jobApplication}`
+        const employer = await JobApplication.find({employerId});
+
+        if (employer) {
+            await JobApplication.findByIdAndUpdate(req.params.id, {
+                status : req.body.status, 
+            }); 
+            return res.status(201).json({
+                status: "success",
+                message : "Data successfully updated"
             })
-        } 
-
-        await JobApplication.findByIdAndUpdate(req.params.id, {
-            status : req.body.status, 
-        }); 
-        res.status(201).json({
-            status: "success",
-            message : "Data successfully updated"
-        })
+        }else {
+            return res.status(201).json({
+                message : "Bad Request!"
+            })
+        }
     } catch (error) {
         console.log(error);
     }
@@ -71,21 +73,18 @@ exports.updateJobStatus = async (req, res) => {
 exports.getAllApplications = async (req, res) => {
     try {
         const employerId = req.user.id;
-        const job = await Job.find({employerId});
 
-        if(job) {
-            let queriedUsers = new QueryMethod(JobApplication.find({}), req.query)
-            .sort()
-            .filter()
-            .limit()
-            .paginate();
+        let queriedUsers = new QueryMethod(JobApplication.find({employerId}), req.query)
+        .sort()
+        .filter()
+        .limit()
+        .paginate();
         let datas = await queriedUsers.query;
         res.status(200).json({
             status: "success",
             results: datas.length,
             datas
         });    
-        }
     } catch (error) {
         res.status(400).json({
             status: "fail",
@@ -94,7 +93,53 @@ exports.getAllApplications = async (req, res) => {
     }
 };
 
-exports.getOneApplication = getOne(JobApplication);
+exports.getJobApplication = async (req, res) => {
+    try {
+        const employerId = req.user.id;
+
+        const jobs = await Job.findOne({employerId});
+
+        if(jobs) {
+            const application = await JobApplication.findById(req.params.id);
+            return res.status(200).json({
+                status : "success",
+                data : {
+                    application
+                }
+            })
+        } else {
+            return res.status(401).json({
+                message: "You're not authorized to perform this action"
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+exports.getOneApplication = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const application = await JobApplication.findById(req.params.id);
+
+        if (userId !== application.userId) {
+            return res.status(401).json({
+                message: "You're not authorized to perform this action"
+            })
+        } else { 
+            return res.status(200).json({
+                status : "success",
+                data : {
+                    application
+                }
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 exports.getMyJobApplications = async (req, res) => {
     try {
@@ -114,19 +159,4 @@ exports.getMyJobApplications = async (req, res) => {
     }
 }
 
-exports.deleteOneApplication = async (req, res) => {
-    try {
-        const del = await JobApplication.findByIdAndDelete({_id : req.params.id});
-
-        if(del) {
-            return res.status(204).send();
-        }else{
-            return res.status(404).send({
-                status : false,
-                message : "Data cannot be fetched"
-            })
-        }
-    }catch (err) {
-        console.log(err)
-    }
-};
+exports.deleteOneApplication = deleteOne(JobApplication);

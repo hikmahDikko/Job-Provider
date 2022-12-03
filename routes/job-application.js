@@ -1,14 +1,18 @@
 const express = require("express");
 const User = require("../models/user");
+const Job = require("../models/job");
 const Employer = require("../models/employer");
 const jobApplicationController = require("../controllers/job-application");
 const { auth } = require("../middleware/authMiddleware");
+const { confirmData } = require("../middleware/confirm-data");
+const JobApplication = require("../models/job-application");
 const router = express.Router();
 
-const { makeApplication, 
+const { createJobApplication, 
     getAllApplications, 
     getMyJobApplications,
     getOneApplication, 
+    getJobApplication, 
     deleteOneApplication,
     updateJobStatus 
 } = jobApplicationController;
@@ -16,15 +20,15 @@ const { makeApplication,
 router.get('/notification', auth(Employer), getAllApplications);
 
 router.route("/")
-    .post(auth(User), makeApplication)
+    .post(auth(User), createJobApplication)
     .get(auth(User), getMyJobApplications);;
 
-router.route("/:id")
-    .get(auth(Employer), getOneApplication)
-    .patch(auth(Employer), updateJobStatus);
+router.route("/users/:id")
+    .get(auth(Employer), confirmData(JobApplication), getJobApplication)
+    .delete(auth(Employer), confirmData(JobApplication), deleteOneApplication)
+    .patch(auth(Employer), confirmData(JobApplication), updateJobStatus);
 
 router.route("/:id")
-    .get(auth(User), getOneApplication)
-    .delete(auth(User), deleteOneApplication);
-
+    .get(auth(User), confirmData(JobApplication), getOneApplication);
+    
 module.exports = router;

@@ -40,6 +40,25 @@ exports.getOne = (model) => {
     }
 }
 
+exports.updateOne = (model) => {
+    return async (req, res) => {
+        try {
+            const payload = req.body;
+
+            const updatedData = await model.findByIdAndUpdate(req.params.id, ...payload);
+
+            res.status(200).json({
+              status: "success",
+              data: {
+                updatedData
+              },
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 exports.deleteOne = (model) => {
     return async (req, res) => {
         try {
@@ -54,8 +73,7 @@ exports.deleteOne = (model) => {
                 })
             }
         }catch (err) {
-            const errors = authErrors(err)
-            res.status(400).json({ errors });
+            console.log(err);
         }
     }
-}
+};

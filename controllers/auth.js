@@ -1,4 +1,3 @@
-const User = require('../models/user');
 const { authErrors } = require("../error_handler/error");
 const { generateToken } = require("../middleware/authMiddleware");
 require("dotenv").config({path : "./config.env"});
@@ -76,10 +75,8 @@ exports.signIn = (model) => {
                 }
             }
         }catch (err) {
-            res.status(400).json({
-                status: "fail",
-                message: err,
-            });
+            const errors = authErrors(err)
+            res.status(404).json({ errors });
         } 
     }
 }

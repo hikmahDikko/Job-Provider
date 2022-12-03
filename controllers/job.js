@@ -2,9 +2,15 @@ const Job = require("../models/job");
 const { jobErrors } = require("../error_handler/error");
 const Employer = require("../models/employer");
 const User = require("../models/user");
-const { getAll } = require("../controllers/generic");
+const { getAll, getOne, updateOne, deleteOne } = require("../controllers/generic");
 
 exports.getAllJobs = getAll(Job);
+
+exports.getOneJob = getOne(Job);
+
+exports.deleteOneJob = deleteOne(Job);
+
+exports.updateOneJob = updateOne(Job);
 
 exports.createJob = async (req, res) => {
     try {
