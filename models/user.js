@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         enum : ["frontend developer", "backend developer", "UI/UX designer", "product designer", "full stack developer"], 
     },
-    workxperience : {
+    workExperience : {
         type : String,
         emum : ["No experience", "1 year", "2 years", "3 years", "4 and above years"]
     },
