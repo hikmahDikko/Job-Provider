@@ -26,7 +26,7 @@ exports.authErrors = (err) => {
 }
 
 exports.jobErrors = (err) => {
-    let errors = { employerId : "", title : "", category : "", location : "", keyword : "", description : "", address : "", jobType : "", workType : ""};
+    let errors = { employerId : "", companyName : "", title : "", salary : "", companyWebsite : "", category : "", location : "", address : "", development : "", workExperience : "", description : "", address : "", jobType : "", companyType : "", workType : ""};
 
     //validate errors
     if(err.message.includes('Job validation failed' )) {

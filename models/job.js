@@ -14,10 +14,12 @@ const jobSchema = new mongoose.Schema({
         required : [true, "Please enter the job title"],
     },
     salary : {
-
+        type : String,
+        required : [true, "Please enter the job salary"],
+        enum : ["negotiable", "$500-$1000", "$1000-$2000", "$2000-$3000"]
     },
     companyWebsite : {
-
+        type : String,
     },
     category : {
         type : String,
@@ -30,23 +32,33 @@ const jobSchema = new mongoose.Schema({
         required : [true, "Please enter the job location"],
         enum : ["Lagos", "Abuja", "Ogun"]
     },
-    keyword : {
+    address : {
+        type : String
+    },
+    development : {
         type : String,
-        required : [true, "Please enter the job location"],
-        enum : ["Nodejs", "TypeScript", "Nestjs", "Figma", "Express", 
-            "HTML", "CSS", "JAVASCRIPT/BOOTSTRAP/JQUERY", "Adobe"]
+        required : [true, "Please enter the job title development"],
+        enum : ["JavaScript/frontend", "Java", "C#/.NET", "Python", "PHP",
+            "Nodejs", "IOS", "Android", "C/C++", "Flutter", "Figma", "Adobe"]
     },
     description : {
         type : String,
         required : [true, "Please enter the job description"]
     },
-    address : {
+    workExperience : {
         type : String,
+        required: [true, "Please enter work experience required for the job"],
+        emum : ["No experience", "1 year", "2 years", "3 years", "4 and above years"]
     },
     jobType : {
         type : String,
         required : [true, "Please enter the job type"],
         enum : ["Remote", "Physical"]
+    },
+    companyType : {
+        type : String,
+        required : [true, "Please enter the company type"],
+        enum : ["Software", "Product", "Security", "Service", "Others"]
     },
     workType :{
         type : String,

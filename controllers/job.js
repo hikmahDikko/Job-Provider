@@ -4,32 +4,12 @@ const Employer = require("../models/employer");
 const User = require("../models/user");
 const { getAll, getOne, updateOne, deleteOne } = require("../controllers/generic");
 
-exports.getAllJobs = getAll(Job);
-
-exports.getOneJob = getOne(Job);
-
-exports.deleteOneJob = deleteOne(Job);
-
-exports.updateOneJob = updateOne(Job);
-
 exports.createJob = async (req, res) => {
     try {
-        const employerId = req.user.id;
-        
-        const {title, category, location, companyName, keyword, description, address, jobType, workType} = req.body;
-        const employer = await Employer.findOne({employerId});
+        const payload = req.body;
 
         const job = await Job.create({ 
-            employerId,
-            title, 
-            category,
-            companyName, 
-            location, 
-            keyword, 
-            description, 
-            address, 
-            jobType, 
-            workType
+            ...payload
         });
         
         return res.status(201).json({
@@ -39,7 +19,30 @@ exports.createJob = async (req, res) => {
             }
         });
     }catch (error) {
-        console.log(error);
+        const errors = jobErrors(error)
+        res.status(404).json({ errors });
+    }
+};
+
+exports.getAllJobs = getAll(Job);
+
+exports.getOneJob = getOne(Job);
+
+exports.deleteOneJob = deleteOne(Job);
+
+exports.updateOneJob = async (req, res) => {
+    try {
+        const payload = req.body;
+
+        const updatedData = await Job.findByIdAndUpdate(req.params.id, ...payload);
+
+        res.status(200).json({
+          status: "success",
+          data: {
+            updatedData
+          },
+        });
+    } catch (error) {
         const errors = jobErrors(error)
         res.status(404).json({ errors });
     }

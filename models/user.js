@@ -36,21 +36,21 @@ const userSchema = new mongoose.Schema({
         type : String,
     },
     linkedInURL : {
-
+        type : String,
     },
     githubURL : {
-
+        type : String,
     },
     cv : {
         type : String,
-        //required : [true, "Please upload your CV"]
     },
     skill : {
         type : String,
         enum : ["frontend developer", "backend developer", "UI/UX designer", "product designer", "full stack developer"], 
     },
-    experience : {
+    workxperience : {
         type : String,
+        emum : ["No experience", "1 year", "2 years", "3 years", "4 and above years"]
     },
     address : {
         type : String,

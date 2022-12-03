@@ -41,12 +41,7 @@ const employerSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
-    },
-    role : {
-        type : String,
-        default : "employer",
-        enum : ["employee", "employer", "admin"]
-    },
+    }
 });
 
 module.exports = mongoose.model("Employer", employerSchema);
