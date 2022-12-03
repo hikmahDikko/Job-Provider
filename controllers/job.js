@@ -20,7 +20,7 @@ exports.createJob = async (req, res) => {
         });
     }catch (error) {
         const errors = jobErrors(error)
-        res.status(404).json({ errors });
+        res.status(400).json({ errors });
     }
 };
 
