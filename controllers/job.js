@@ -67,8 +67,7 @@ exports.getJobRecommendations = async (req, res) => {
             })
         }
         res.status(201).json({
-            status : "success",
-            message : "Check back later"
+            message : "Please update your provide for job match"
         })
     } catch (error) {
         console.log(error);
