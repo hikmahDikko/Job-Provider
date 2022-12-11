@@ -1,12 +1,13 @@
 {
   "name": "jobrecommendation",
   "version": "1.0.0",
-  "description": "",
+  "description": "A job listing and recommendation application that helps users find jobs based on their skills and experience. ",
   "main": "index.js",
+  "githubRepo" : "https://github.com/hikmahDikko/Job-Provider",
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "",
+  "author": "hikmahDikko",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

@@ -21,11 +21,12 @@ router.get('/notification', auth(Employer), getAllApplications);
 
 router.route("/")
     .post(auth(User), createJobApplication)
-    .get(auth(User), getMyJobApplications);;
+    .get(auth(User), getMyJobApplications)
+    .delete(auth(User), confirmData(JobApplication), deleteOneApplication);
+
 
 router.route("/users/:id")
     .get(auth(Employer), confirmData(JobApplication), getJobApplication)
-    .delete(auth(Employer), confirmData(JobApplication), deleteOneApplication)
     .patch(auth(Employer), confirmData(JobApplication), updateJobStatus);
 
 router.route("/:id")

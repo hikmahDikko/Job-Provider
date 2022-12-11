@@ -2,7 +2,8 @@ const JobApplication = require("../models/job-application");
 const QueryMethod = require("../utils/query");
 const Job = require("../models/job");
 const Employer = require("../models/employer");
-const { getOne, getAll, deleteOne } = require("../controllers/generic");
+const sendEmail = require("../utils/email");
+const { deleteOne } = require("../controllers/generic");
 
 exports.createJobApplication = async (req, res) => {
     try {
@@ -11,13 +12,15 @@ exports.createJobApplication = async (req, res) => {
         const { jobId, status } = req.body;
 
         const job = await Job.findOne({jobId});
-
+        
         if (!job) {
-            return res.status(404).json({
+            return res.status(400).json({
                 status: "fail",
-                message : `There is no job with the ID ${jobId}`
-            })
-        } 
+                message: `There is no data with the ID ${jobId}`,
+            });
+        }
+
+        const employer = await Employer.findOne({_id: job.employerId })
 
         const user = await JobApplication.findOne({userId, jobId});
 
@@ -28,6 +31,14 @@ exports.createJobApplication = async (req, res) => {
                 jobId, 
                 status
             });
+
+            const message = `An employee just applied for a job from you. Tab the url to view the employees profile. \n ${req.protocol}://${req.get("host")}/api/v1/applications/users/${jobApplication._id}`;
+
+            await sendEmail({
+                email : employer.email,
+                subject : "Job Application for you",
+                message
+            })
 
             return res.status(201).json({
                 status : "success",
@@ -121,7 +132,7 @@ exports.getOneApplication = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const application = await JobApplication.findById(req.params.id);
+        const application = await JobApplication.findById(req.params.id).populate("userId");
 
         if (userId !== application.userId) {
             return res.status(401).json({

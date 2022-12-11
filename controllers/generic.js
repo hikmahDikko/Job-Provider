@@ -1,5 +1,4 @@
 const QueryMethod = require("../utils/query");
-const { authErrors } = require("../error_handler/error");
 
 exports.getAll = (model) => {
     return async (req, res) => {
@@ -45,10 +44,11 @@ exports.updateOne = (model) => {
         try {
             const payload = req.body;
 
-            const updatedData = await model.findByIdAndUpdate(req.params.id, ...payload);
+            const updatedData = await model.findByIdAndUpdate(req.params.id, {...payload});
 
             res.status(200).json({
               status: "success",
+              message : "Data successfully updated",
               data: {
                 updatedData
               },

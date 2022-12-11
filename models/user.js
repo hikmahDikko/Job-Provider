@@ -27,11 +27,6 @@ const userSchema = new mongoose.Schema({
         minlength : [8, "Password is less than 8 characters"],
         select: false,
     },
-    confirmPassword : {
-        type : String,
-        minlength : [8, "Password is less than 8 characters"],
-        select: false,
-    },
     phoneNumber : {
         type : String,
     },
@@ -41,14 +36,11 @@ const userSchema = new mongoose.Schema({
     githubURL : {
         type : String,
     },
-    cv : {
-        type : String,
-    },
     skill : {
         type : String,
         enum : ["frontend developer", "backend developer", "UI/UX designer", "product designer", "full stack developer"], 
     },
-    workExperience : {
+    yearOfExperience : {
         type : String,
         emum : ["No experience", "1 year", "2 years", "3 years", "4 and above years"]
     },
@@ -57,11 +49,6 @@ const userSchema = new mongoose.Schema({
     },
     profileImage : {
         type : String,
-    },
-    role : {
-        type : String,
-        default : "employee",
-        enum : ["employee", "admin"]
     },
     createdAt : {
         type : Date,

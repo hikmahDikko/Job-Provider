@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const { getAll, getOne, deleteOne, updateOne } = require("../controllers/generic");
+const { getAll, deleteOne, updateOne } = require("../controllers/generic");
 const { createOne, signIn } = require("../controllers/auth");
 
 exports.signUpUser = createOne(User);

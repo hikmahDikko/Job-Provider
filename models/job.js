@@ -45,7 +45,7 @@ const jobSchema = new mongoose.Schema({
         type : String,
         required : [true, "Please enter the job description"]
     },
-    workExperience : {
+    yearOfExperience : {
         type : String,
         required: [true, "Please enter work experience required for the job"],
         emum : ["No experience", "1 year", "2 years", "3 years", "4 and above years"]

@@ -1,14 +1,15 @@
 const Job = require("../models/job");
 const { jobErrors } = require("../error_handler/error");
-const Employer = require("../models/employer");
 const User = require("../models/user");
-const { getAll, getOne, updateOne, deleteOne } = require("../controllers/generic");
+const { getAll, getOne, deleteOne } = require("../controllers/generic");
 
 exports.createJob = async (req, res) => {
     try {
         const payload = req.body;
+        const employerId = req.user;
 
         const job = await Job.create({ 
+            employerId,
             ...payload
         });
         

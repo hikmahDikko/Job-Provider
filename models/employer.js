@@ -33,11 +33,6 @@ const employerSchema = new mongoose.Schema({
         minlength : [8, "Password is less than 8 characters"],
         select: false,
     },
-    confirmPassword : {
-        type : String,
-        minlength : [8, "Password is less than 8 characters"],
-        select: false,
-    },
     createdAt: {
         type: Date,
         default: Date.now(),
