@@ -2,6 +2,7 @@ const JobApplication = require("../models/job-application");
 const QueryMethod = require("../utils/query");
 const Job = require("../models/job");
 const Employer = require("../models/employer");
+const sendEmail = require("../utils/email");
 const { deleteOne } = require("../controllers/generic");
 
 exports.createJobApplication = async (req, res) => {
@@ -30,6 +31,14 @@ exports.createJobApplication = async (req, res) => {
                 jobId, 
                 status
             });
+
+            const message = `An employee just applied for a job from you. Tab the url to view the employees profile. \n ${req.protocol}://${req.get("host")}/api/v1/applications/users/${jobApplication._id}`;
+
+            await sendEmail({
+                email : employer.email,
+                subject : "Job Application for you",
+                message
+            })
 
             return res.status(201).json({
                 status : "success",
@@ -123,7 +132,7 @@ exports.getOneApplication = async (req, res) => {
     try {
         const userId = req.user.id;
 
-        const application = await JobApplication.findById(req.params.id).populate("userId");
+        const application = await JobApplication.findById(req.params.id);
 
         if (userId !== application.userId) {
             return res.status(401).json({

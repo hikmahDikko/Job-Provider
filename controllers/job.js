@@ -55,7 +55,7 @@ exports.getJobRecommendations = async (req, res) => {
         
         const user = await User.findById({_id : userId});
         
-        const jobRecommendations = await Job.find({category : user.skill, workExperience : user.workExperience});
+        const jobRecommendations = await Job.find({category : user.skill, yearOfExperience : user.yearOfExperience});
 
         if(jobRecommendations) {
             return res.status(201).json({
